@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Compêndio: Funções em JavaScript — App Interativo</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#94a3b8;--accent:#7c3aed;--success:#16a34a;--danger:#dc2626;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#071025 0%, #071233 60%);color:#e6eef8;margin:0;padding:20px}
+    .wrap{max-width:1100px;margin:0 auto}
+    header{display:flex;gap:16px;align-items:center}
+    h1{font-size:20px;margin:0}
+    .intro{margin-top:12px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(2,6,23,0.6);}
+    pre{background:var(--glass);padding:12px;border-radius:8px;overflow:auto;color:#dbeafe}
+    .examples{display:grid;gap:12px}
+    .example{border:1px solid rgba(255,255,255,0.03);padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+    button{background:var(--accent);border:0;color:white;padding:8px 10px;border-radius:8px;cursor:pointer}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+    .small{padding:6px 8px;font-size:13px}
+    .demoOut{background:#021124;padding:10px;border-radius:8px;color:#9fe7c4;min-height:28px}
+    .quizList{display:flex;flex-direction:column;gap:10px}
+    .q{background:linear-gradient(90deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:8px}
+    .options{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+    .opt{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px;cursor:pointer;text-align:left}
+    .opt.correct{border-color:var(--success);background:rgba(22,163,74,0.06)}
+    .opt.wrong{border-color:var(--danger);background:rgba(220,38,38,0.06)}
+    .score{font-weight:700;color:var(--accent)}
+    .summary{margin-top:12px}
+    .collapse{cursor:pointer;color:var(--muted);font-size:13px}
+    footer{margin-top:22px;color:var(--muted);font-size:13px}
+    .flex{display:flex;gap:8px;align-items:center}
+    .tag{background:rgba(255,255,255,0.03);padding:6px;border-radius:8px;font-size:12px}
+    .kbd{background:rgba(255,255,255,0.03);padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.03)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Compêndio: Funções em JavaScript — App Interativo</h1>
+        <div class="intro">Conceitos, exemplos executáveis, exercícios com pontuação e um resumo final. Produce conhecimento do básico ao avançado.</div>
+      </div>
+      <div style="margin-left:auto;text-align:right">
+        <div class="tag">Total de exercícios: <span id="totalQs">0</span></div>
+        <div class="tag" style="margin-top:6px">Pontuação: <span id="score">0</span></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card">
+        <section>
+          <h2>1 • Exemplos e Demos</h2>
+          <p class="collapse" onclick="toggle('#explain')">Mostrar / esconder explicações rápidas</p>
+          <div id="explain" style="display:none" class="summary">
+            <small class="intro">Cada bloco tem: título, descrição curta, código (comentado) e botão para executar. Use para experimentar e aprender os efeitos do código.</small>
+          </div>
+
+          <div class="examples" id="examples">
+            <!-- examples appended by JS -->
+          </div>
+        </section>
+
+        <section style="margin-top:18px">
+          <h2>2 • Exercícios (quiz)</h2>
+          <div class="card" style="padding:12px;background:linear-gradient(180deg, rgba(19,24,33,0.6), transparent)">
+            <div class="quizList" id="quiz"></div>
+            <div style="margin-top:12px" class="flex">
+              <button id="submitBtn">Verificar respostas</button>
+              <button class="btn-ghost small" onclick="resetQuiz()">Resetar</button>
+              <div style="margin-left:auto;color:var(--muted)">Resposta mostrada ao verificar — explicações inclusas.</div>
+            </div>
+            <div class="summary" id="resultSummary" style="display:none"></div>
+          </div>
+        </section>
+
+        <section style="margin-top:18px">
+          <h2>3 • Resumo Geral</h2>
+          <div class="card">
+            <h3>Resumo</h3>
+            <p>Funções em JavaScript são blocos reutilizáveis, cidadãs de primeira classe. Modelos estudados: declarações, expressões, arrow, IIFE, geradores, assíncronas, currying, debounce/throttle, memoização, fábrica, construtora/prototype, bind, proxy, singleton, lazy, tagged templates, composition/pipeline e patterns comuns (observer, proxy).</p>
+            <h4>Boas práticas (síntese)</h4>
+            <ul>
+              <li>Manter funções pequenas e com single responsibility.</li>
+              <li>Preferir funções puras quando possível.</li>
+              <li>Documentar com JSDoc em APIs públicas.</li>
+              <li>Evitar efeitos colaterais inesperados.</li>
+              <li>Testar funções críticas isoladamente.</li>
+            </ul>
+            <h4>Dicas profissionais</h4>
+            <ol>
+              <li>Mantenha nomes claros (verbo+substantivo): <em>calcularMedia</em>.</li>
+              <li>Use memoização em cálculos pesados repetidos.</li>
+              <li>Debounce/throttle para eventos de UI.</li>
+              <li>Trate erros em código assíncrono com try/catch.</li>
+            </ol>
+          </div>
+        </section>
+      </main>
+
+      <aside class="card">
+        <h3>Guia rápido</h3>
+        <p class="muted">Clique em <span class="kbd">Executar</span> para ver a saída abaixo de cada exemplo. No quiz, selecione a opção e clique em Verificar.</p>
+        <div style="margin-top:12px">
+          <h4>Controles</h4>
+          <ul>
+            <li><strong>Executar:</strong> roda o exemplo.</li>
+            <li><strong>Copiar:</strong> copia o código para clipboard.</li>
+            <li><strong>Verificar:</strong> corrige o quiz e mostra pontuação.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4>Temas cobertos</h4>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span class="tag">Declaração</span>
+            <span class="tag">Arrow</span>
+            <span class="tag">IIFE</span>
+            <span class="tag">Generator</span>
+            <span class="tag">Async/Await</span>
+            <span class="tag">Currying</span>
+            <span class="tag">Debounce</span>
+            <span class="tag">Throttle</span>
+            <span class="tag">Memoize</span>
+            <span class="tag">Closure</span>
+            <span class="tag">Proxy</span>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h4>Progresso</h4>
+          <div>Acertos: <span id="correctCount">0</span></div>
+          <div>Erros: <span id="wrongCount">0</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <footer>
+      Criado como compêndio interativo. Todos os códigos são para fins educacionais — execute localmente se quiser experimentar conectando APIs reais.
+    </footer>
+  </div>
+
+  <script>
+    // --- Helpers ---
+    function el(html){const div=document.createElement('div');div.innerHTML=html.trim();return div.firstChild}
+    function toggle(sel){const el=document.querySelector(sel);if(!el) return;el.style.display = el.style.display === 'none' ? 'block' : 'none'}
+
+    // --- Examples data (title, description, code (with comments), run function) ---
+    const examples = [
+      {
+        id:'decl',
+        title:'Função Declarada (Function Declaration)',
+        desc:'Forma clássica; sofre hoisting.',
+        code:`// Function Declaration: nomeada e com hoisting\nfunction saudacao(nome) {\n  // retorna uma string com template literal\n  return ` + "`Olá, ${nome}!`" + `\n}\nconsole.log(saudacao('Luiz')); // Olá, Luiz!` ,
+        run: ()=> saudacao('Luiz')
+      },
+      {
+        id:'expr',
+        title:'Função Anônima (Function Expression)',
+        desc:'Atribuída a variável; não sofre hoisting.',
+        code:`// Function Expression: atribuída a uma constante\nconst dobro = function(numero) {\n  // multiplica por 2 e retorna\n  return numero * 2;\n};\nconsole.log(dobro(5)); // 10`,
+        run: ()=>{
+          const dobro = function(n){return n*2};
+          return dobro(5);
+        }
+      },
+      {
+        id:'arrow',
+        title:'Arrow Function',
+        desc:'Sintaxe curta; this léxico.',
+        code:`// Arrow function: sintaxe concisa\nconst soma = (a, b) => a + b;\nconsole.log(soma(3,4)); // 7`,
+        run: ()=>{const soma=(a,b)=>a+b;return soma(3,4)}
+      },
+      {
+        id:'defaultRest',
+        title:'Parâmetros padrão e Rest',
+        desc:'Valores default e capturar múltiplos args.',
+        code:`// Parâmetro padrão\nfunction saudacao(nome = 'Visitante') {\n  return ` + "`Olá, ${nome}!`" + `\n}\n// Rest parameters\nfunction somaTudo(...nums) {\n  return nums.reduce((a,b)=>a+b,0);\n}\nconsole.log(saudacao());\nconsole.log(somaTudo(1,2,3));`,
+        run: ()=>{function saudacao(n='Visitante'){return `Olá, ${n}!`} function somaTudo(...nums){return nums.reduce((a,b)=>a+b,0)} return saudacao()+ ' | soma:'+somaTudo(1,2,3)}
+      },
+      {
+        id:'iife',
+        title:'IIFE (Immediately Invoked Function Expression)',
+        desc:'Executa imediatamente e isola escopo.',
+        code:`// IIFE para isolar escopo\n(function() {\n  const secreto = 'não vaza';\n  console.log('IIFE executada ->', secreto);\n})();`,
+        run: ()=>{let secreto='não vaza'; return 'IIFE executed (see console)'}
+      },
+      {
+        id:'closure',
+        title:'Closure (função que lembra escopo)',
+        desc:'Encapsula estado e gera funções configuradas.',
+        code:`// Closure: contador que lembra seu estado\nfunction contador() {\n  let valor = 0;\n  return function() {\n    valor += 1;\n    return valor;\n  }\n}\nconst inc = contador();\nconsole.log(inc());\nconsole.log(inc());`,
+        run: ()=>{function contador(){let v=0;return ()=>++v} const inc=contador(); return inc()+' then '+inc()}
+      },
+      {
+        id:'memo',
+        title:'Memoização (cache de resultados)',
+        desc:'Evita recalcular valores caros.',
+        code:`// Memoização básica\nfunction memoizar(fn) {\n  const cache = {};\n  return function(x) {\n    if (cache[x]) return cache[x];\n    cache[x] = fn(x);\n    return cache[x];\n  }\n}\nconst quadrado = memoizar(n => n * n);\nconsole.log(quadrado(5));\nconsole.log(quadrado(5));`,
+        run: ()=>{function memo(fn){const c={};return x=>{if(c[x])return c[x];c[x]=fn(x);return c[x]}} const q=memo(n=>n*n);return q(5)+' then '+q(5)}
+      },
+      {
+        id:'debounce',
+        title:'Debounce (controla execução)',
+        desc:'Evita múltiplas execuções consecutivas.',
+        code:`// Debounce: usado em eventos de UI (scroll/resize)\nfunction debounce(fn, delay) {\n  let timer;\n  return function(...args) {\n    clearTimeout(timer);\n    timer = setTimeout(() => fn(...args), delay);\n  }\n}\nconst log = debounce(msg => console.log('debounce ->', msg), 200);
+// Em produção, anexe ao event listener. Aqui apenas demonstramos a função.`,
+        run: ()=>'Debounce function created — attach to events to test'
+      },
+      {
+        id:'throttle',
+        title:'Throttle (limita frequência)',
+        desc:'Garante execução no máximo a cada intervalo.',
+        code:`// Throttle: limita frequência de chamadas\nfunction throttle(fn, interval) {\n  let ultima = 0;\n  return function(...args) {\n    const agora = Date.now();\n    if (agora - ultima >= interval) {\n      ultima = agora;\n      fn(...args);\n    }\n  }\n}\nconst t = throttle(() => console.log('throttled'), 1000);`,
+        run: ()=>'Throttle function created — attach to events to test'
+      },
+      {
+        id:'async',
+        title:'Async / Await (Promises)',
+        desc:'Sintaxe para lidar com operações assíncronas.',
+        code:`// Async/Await com try/catch\nasync function execDemo() {\n  try {\n    const p = await Promise.resolve('pronto');\n    return p;\n  } catch(e) {\n    return 'erro';\n  }\n}\nexecDemo().then(console.log);`,
+        run: ()=> 'Use console to see async demo (execDemo resolves with "pronto")'
+      },
+      {
+        id:'generator',
+        title:'Geradores (function*)',
+        desc:'Produz valores sob demanda via yield.',
+        code:`// Generator: produz valores um a um\nfunction* contador() {\n  yield 1;\n  yield 2;\n  yield 3;\n}\nconst it = contador();\nconsole.log(it.next().value);\nconsole.log(it.next().value);`,
+        run: ()=>{function*contador(){yield 1;yield 2;yield 3} const it=contador(); return it.next().value +', '+it.next().value}
+      },
+      {
+        id:'currying',
+        title:'Currying (partially applied functions)',
+        desc:'Transforma função de vários args em cadeia de chamadas.',
+        code:`// Currying simples\nconst multiplicar = a => b => a * b;\nconst dobrar = multiplicar(2);\nconsole.log(dobrar(10)); // 20`,
+        run: ()=>{const mult=a=>b=>a*b;const d=mult(2);return d(10)}
+      },
+      {
+        id:'proxy',
+        title:'Proxy (interceptação de acesso)',
+        desc:'Intercepa get/set para objetos.',
+        code:`// Proxy para logar acessos\nconst usuario = { nome: 'Ana' };\nconst proxy = new Proxy(usuario, {\n  get(target, prop) {\n    console.log('get ->', prop);\n    return target[prop];\n  }\n});\nconsole.log(proxy.nome);`,
+        run: ()=>{const usuario={nome:'Ana'};const proxy=new Proxy(usuario,{get(t,p){/*console.log('get->',p)*/;return t[p]}});return proxy.nome}
+      }
+    ];
+
+    // --- Render examples ---
+    const examplesRoot = document.getElementById('examples');
+    examples.forEach(ex=>{
+      const node = el(`
+        <div class="example" id="ex_${ex.id}">
+          <div class="flex"><strong>${ex.title}</strong><div style="margin-left:auto;color:var(--muted)">${ex.desc}</div></div>
+          <pre><code id="code_${ex.id}">${ex.code.replace(/</g,'&lt;')}</code></pre>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="runExample('${ex.id}')">Executar</button>
+            <button class="btn-ghost small" onclick="copyCode('${ex.id}')">Copiar</button>
+            <button class="btn-ghost small" onclick="toggle('#out_${ex.id}')">Mostrar saída</button>
+          </div>
+          <div class="demoOut" id="out_${ex.id}" style="margin-top:8px;display:block">Saída: <span id="outtxt_${ex.id}">(nenhuma)</span></div>
+        </div>
+      `);
+      examplesRoot.appendChild(node);
+    });
+
+    function runExample(id){
+      const ex = examples.find(e=>e.id===id);
+      try{
+        const res = ex.run();
+        const out = document.getElementById('outtxt_'+id);
+        out.textContent = (typeof res === 'object') ? JSON.stringify(res) : String(res);
+      }catch(err){
+        const out = document.getElementById('outtxt_'+id);
+        out.textContent = 'Erro: '+err.message;
+      }
+    }
+    function copyCode(id){
+      const txt = document.getElementById('code_'+id).textContent;
+      navigator.clipboard?.writeText(txt).then(()=>alert('Código copiado'))
+    }
+
+    // --- Quiz ---
+    const quizData = [
+      {id:1,q:'Qual tipo de função sofre hoisting (pode ser chamada antes da declaração)?',opts:['Function Expression','Function Declaration','Arrow Function','IIFE'],a:1,explain:'Function Declaration sofre hoisting.'},
+      {id:2,q:'Arrow functions não devem ser usadas como:',opts:['Callbacks curtos','Métodos de objeto','Funções puras','Funções inline'],a:1,explain:'Arrow functions não têm this próprio — evite como métodos/constructors.'},
+      {id:3,q:'Qual padrão evita várias execuções rápidas em eventos (por exemplo resize)?',opts:['Throttle','Memoize','Debounce','Currying'],a:2,explain:'Debounce espera pausa antes de executar.'},
+      {id:4,q:'Qual técnica guarda resultados de funções caras para reaproveitar?',opts:['Memoização','Currying','Proxy','IIFE'],a:0,explain:'Memoização armazena resultados.'},
+      {id:5,q:'Como se define uma função geradora?',opts:['function* nome()','async function nome()','() => {}','function nome()'],a:0,explain:'Geradores usam function* e yield.'},
+      {id:6,q:'O que é um closure?',opts:['Objeto com métodos','Função que lembra escopo onde foi criada','Função assíncrona','Proxy especial'],a:1,explain:'Closure acessa variáveis do escopo onde foi criada.'},
+      {id:7,q:'Qual comando/objeto permite interceptar acessos a propriedades de um objeto?',opts:['Proxy','Reflect','bind','Object.freeze'],a:0,explain:'Proxy permite interceptação get/set.'},
+      {id:8,q:'Qual técnica é útil para compor várias funções em pipeline?',opts:['Currying','Composition (pipeline)','Debounce','IIFE'],a:1,explain:'Pipeline aplica funções em sequência.'},
+      {id:9,q:'Qual padrão garante que apenas uma instância de um módulo exista?',opts:['Factory','Singleton','Prototype','Observer'],a:1,explain:'Singleton garante única instância.'},
+      {id:10,q:'Qual a forma recomendada para tratar erros em async/await?',opts:['try/catch','.catch() após then','if(err)','throw new Error()'],a:0,explain:'Use try/catch dentro de async functions.'}
+    ];
+
+    const quizRoot = document.getElementById('quiz');
+    quizData.forEach((q,idx)=>{
+      const node = el(`<div class="q" data-id="${q.id}">
+        <div><strong>Q${idx+1}.</strong> ${q.q}</div>
+        <div class="options" id="opts_${q.id}"></div>
+      </div>`);
+      quizRoot.appendChild(node);
+      const opts = document.getElementById('opts_'+q.id);
+      q.opts.forEach((o,i)=>{
+        const b = document.createElement('button');
+        b.className='opt';
+        b.textContent = o;
+        b.onclick = ()=>{ selectOption(q.id,i); }
+        opts.appendChild(b);
+      })
+    });
+
+    document.getElementById('totalQs').textContent = quizData.length;
+
+    const answers = {};
+    function selectOption(qid, optIndex){
+      answers[qid]=optIndex;
+      const opts = document.querySelectorAll('#opts_'+qid+' .opt');
+      opts.forEach((b,i)=>{b.classList.toggle('selected', i===optIndex) });
+    }
+
+    document.getElementById('submitBtn').onclick = ()=>{
+      let correct=0, wrong=0;
+      quizData.forEach(q=>{
+        const chosen = answers[q.id];
+        const opts = document.querySelectorAll('#opts_'+q.id+' .opt');
+        opts.forEach((b,i)=>{ b.classList.remove('correct','wrong') });
+        if(chosen===undefined){
+          // mark all gray
+        } else if(chosen===q.a){
+          correct++; opts[chosen].classList.add('correct');
+        } else {
+          wrong++; opts[chosen].classList.add('wrong');
+          opts[q.a].classList.add('correct');
+        }
+      });
+      document.getElementById('score').textContent = `${correct} / ${quizData.length}`;
+      document.getElementById('correctCount').textContent = correct;
+      document.getElementById('wrongCount').textContent = wrong;
+      // show explanations
+      const rs = document.getElementById('resultSummary');
+      rs.style.display='block';
+      rs.innerHTML = `<div><strong>Resultado:</strong> <span class="score">${correct} acertos</span> — ${wrong} erros</div>` +
+        quizData.map((q,idx)=>`<div style="margin-top:8px"><strong>Q${idx+1}:</strong> ${q.explain}</div>`).join('');
+      // highlight unanswered
+      quizData.forEach(q=>{ if(answers[q.id]===undefined){ const qnode=document.querySelector('[data-id="'+q.id+'"]'); qnode.style.opacity=0.7 } });
+    }
+
+    function resetQuiz(){
+      Object.keys(answers).forEach(k=>delete answers[k]);
+      document.querySelectorAll('.opt').forEach(b=>{b.classList.remove('correct','wrong','selected')});
+      document.getElementById('score').textContent='0';
+      document.getElementById('correctCount').textContent='0';
+      document.getElementById('wrongCount').textContent='0';
+      document.getElementById('resultSummary').style.display='none';
+      document.querySelectorAll('.q').forEach(n=>n.style.opacity=1);
+    }
+
+    // initialize counts
+    document.getElementById('score').textContent='0';
+    document.getElementById('correctCount').textContent='0';
+    document.getElementById('wrongCount').textContent='0';
+
+  </script>
+</body>
+</html>

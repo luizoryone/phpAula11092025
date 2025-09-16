@@ -9,9 +9,9 @@ let listaQuente =[];
 
 for(let i in temperaturas) {
     let temp = temperaturas[i];
-    listaFrio.push(i);
     console.log(`Hora ${i}: ${temp}°C`);
     if(temp < frio){
+        listaFrio.push(i);
         listaAgradavel.push(i);
         console.log("A temperatura é classificada como 'Frio'");
     } else if(temp >= frio && temp < quente){

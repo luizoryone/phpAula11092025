@@ -5,3 +5,14 @@ for (let fase =1; fase <=10; fase++){
         break
     }
 }
+
+
+for(let j =1; j<=100;j++){
+    if(j % 2 !==0){
+        j++;
+        if(j %4==0)
+            j +=4;
+        console.log("Fase",j)
+        continue;
+}
+};

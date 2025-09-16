@@ -3,16 +3,25 @@ let temperaturas = [14.5,14.8,16.0,18.0,19.5,19.9,21.5,23.0,24.5,29.0,31.5,32.7,
 let frio = 20;
 let agradável = 29;
 let quente = 30;
+let listaFrio =[];
+let listaAgradavel =[];
+let listaQuente =[];
 
 for(let i in temperaturas) {
     let temp = temperaturas[i];
+    listaFrio.push(i);
     console.log(`Hora ${i}: ${temp}°C`);
     if(temp < frio){
+        listaAgradavel.push(i);
         console.log("A temperatura é classificada como 'Frio'");
     } else if(temp >= frio && temp < quente){
+        listaQuente.push(i);
         console.log("A temperatura é classificada como 'Agradável'");
     } else {
         console.log("A temperatura é classificada como 'Quente'");
     }
 }
+console.log("Lista de Horas com Temperaturas 'Frio':", listaFrio);
+console.log("Lista de Horas com Temperaturas 'Agradável':", listaAgradavel);
+console.log("Lista de Horas com Temperaturas 'Quente':", listaQuente);
 

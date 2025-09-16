@@ -12,13 +12,13 @@ for(let i in temperaturas) {
     console.log(`Hora ${i}: ${temp}°C`);
     if(temp < frio){
         listaFrio.push(i);
-        listaAgradavel.push(i);
         console.log("A temperatura é classificada como 'Frio'");
     } else if(temp >= frio && temp < quente){
-        listaQuente.push(i);
+        listaAgradavel.push(i);
         console.log("A temperatura é classificada como 'Agradável'");
     } else {
         console.log("A temperatura é classificada como 'Quente'");
+        listaQuente.push(i);
     }
 }
 console.log("Lista de Horas com Temperaturas 'Frio':", listaFrio);

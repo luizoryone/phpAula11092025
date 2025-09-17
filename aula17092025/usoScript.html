@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Script no Final do Body</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Minha Página</h1>
+    </header>
+
+    <main>
+        <p id="mensagem">Este é o conteúdo principal.</p>
+        <button id="meuBotao">Clique Aqui</button>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Minha Empresa</p>
+    </footer>
+
+    <script>
+        // Este código será executado somente após o DOM ter sido totalmente carregado
+        // e o conteúdo HTML ter sido parseado pelo navegador.
+
+        const botao = document.getElementById('meuBotao'); // Acessando um elemento do DOM que já existe
+        const mensagem = document.getElementById('mensagem');
+
+        if (botao && mensagem) {
+            botao.addEventListener('click', () => {
+                mensagem.textContent = 'O botão foi clicado e a mensagem foi atualizada!';
+                console.log('Botão clicado!');
+            });
+        } else {
+            console.error('Elementos do DOM não encontrados!');
+        }
+
+        console.log('Script final do body executado com sucesso.');
+    </script>
+
+</body>
+</html>

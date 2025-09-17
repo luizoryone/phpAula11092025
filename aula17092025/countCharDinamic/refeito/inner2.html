@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .destaque {
+            color: rgb(132, 128, 207);
+            background-color: yellow;
+            border: 2px dotted rgb(148, 38, 38);
+            padding: 10px;
+        }
+    </style>
+</head>
+<h1 id="h1Inner">OLÁ SALA F09</h1>
+<button type="button" id="btnh1">FORMATAR INNER</button>
+<body>
+    
+</body>
+<SCript>
+    const h1Inner = document.getElementById("h1Inner");
+    const btnh1 = document.getElementById("btnh1");
+    btnh1.addEventListener("click", () =>{
+        h1Inner.innerHTML = "<h2>OLÁ <p>BRASIL</p></h2>";
+        h1Inner.classList.add("destaque");
+    });
+</SCript>
+</html>

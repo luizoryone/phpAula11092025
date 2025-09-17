@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        .destaque{
+            color: red;
+            font-weight: bold;
+            background-color: aqua;
+        }
+        #btn_h1{
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="h1_text">Este texto será alterado!</h1>
+    <button type="button" id="btn_h1">Alterar Texto InnerHTML</button>
+</body>
+<script>
+    const id_h1 = document.getElementById("h1_text");
+    const btn_h1 = document.getElementById("brn_h1");
+    
+    btn_h1.addEventListener("click", () =>
+    {
+        id_h1.innerHTML = "Texto<p> Alterado </p> via innerHTML";
+        id_h1.classList.add("destaque");
+    });
+
+</script>
+</html>

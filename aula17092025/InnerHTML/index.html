@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionando DOM INNER</title>
+    <style>
+        .destaque {
+            color: red;
+            background-color: yellow;
+            border: 4px dotted black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="innerh1">Olá Mundo</h1>
+
+    <button type="button" id="btnInner">Enviar texto para Inner do id innerh1</button>
+</body>
+<script>
+    const idh1 = document.getElementById("innerh1");
+    console.log(idh1.innerHTML);
+    const btn = document.getElementById("btnInner");
+    
+    btn.addEventListener("click", () => {
+        idh1.innerHTML = "Olá <p>Brasil</p>";
+        idh1.classList.add("destaque");
+    });
+</script>
+</html>

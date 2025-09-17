@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade: Contador de Caracteres Dinâmico</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            margin: 20px;
+            display: flex; /* Adicionei display: flex para alinhar os itens */
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+            background-color: rgb(198, 224, 237);
+        }
+        #textInput { /* ID corrigido para 'textInput' */
+            width: 100%;
+            max-width: 600px; /* Adicionei um max-width para melhor visualização em telas grandes */
+            height: 500px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        #charCount {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #754242;
+            border: 2px solid #07796b;
+            font-size: larger;
+            color: #5046d5;
+        }
+        .highlight {
+            font-weight: bold;
+            color: red;
+            background-color: #e81616;
+            padding: 10px 10px 10px 10px;
+        }
+    </style>
+</head>
+<body>      
+    <h1>Contador de Caracteres Dinâmico</h1>
+    <textarea id="textInput" placeholder="Digite seu texto aqui..."></textarea>
+    <div id="charCount">Caracteres: 0</div>
+</body>
+<script src="script.js"></script>
+</html>
